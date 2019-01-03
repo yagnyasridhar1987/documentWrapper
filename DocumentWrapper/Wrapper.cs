@@ -13,8 +13,8 @@ namespace FunctionWrapper
 {
     public static class Wrapper
     {
-        public static CloudStorageAccount storageAccount = new CloudStorageAccount(new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
-            "<storage-account-name>", "<access-key>"), true);
+        public static CloudStorageAccount storageAccount = new CloudStorageAccount(
+            new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials("<storage-account-name>", "<access-key>"), true);
         public static CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
         public static CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
         public static CloudBlob blob = container.GetBlobReference("");
@@ -32,12 +32,11 @@ namespace FunctionWrapper
         [FunctionName("Orchestration")]
         public static async Task<string> Run([OrchestrationTrigger] DurableOrchestrationContext context)
         {
-            string path = context.GetInput<string>();
             var tasks = new Task<string>[2];
             string extractData = string.Empty;
 
-            tasks[0] = context.CallActivityAsync<string>("ValidateDocument", path);
-            tasks[1] = context.CallActivityAsync<string>("ExtractDocument", path);
+            tasks[0] = context.CallActivityAsync<string>("ValidateDocument", string.Empty);
+            tasks[1] = context.CallActivityAsync<string>("ExtractDocument", string.Empty);
             await Task.WhenAll(tasks);
 
             if (tasks[0].Result.ToString() == "Success")
