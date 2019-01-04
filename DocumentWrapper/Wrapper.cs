@@ -15,7 +15,7 @@ namespace FunctionWrapper
     public static class Wrapper
     {
         public static CloudStorageAccount storageAccount = new CloudStorageAccount(new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
-            "documentwrapper201901030", "9h8+Z2AaTkirBV0rw5HYuN1XD/Jb9Ti6EfFGk0kHch9EzW40MElZrpcQvYv6CMyOKcYDx17khEuZg1ln/7QtNQ=="), true);
+            "name", "access key"), true);
         public static CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
         public static CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
         public static CloudBlob blob = container.GetBlobReference("1.txt");
